@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Be My Valentines?</title>
+  <!-- Import a fancy Google Font for the word "Valentines" -->
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      text-align: center;
+      font-family: Arial, sans-serif;
+      background-color: #ffe6e6;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      padding: 20px;
+    }
+    /* Main title */
+    h1 {
+      font-size: 2.5em;
+      margin: 20px 0;
+    }
+    /* Make "Valentines" fancy */
+    h1 .fancy {
+      font-family: 'Dancing Script', cursive;
+      color: #c2185b;
+    }
+    /* Subtext styling */
+    .subtext {
+      font-size: 1.2em;
+      margin: 10px 0 20px 0;
+    }
+    /* Main image styling */
+    #mainImage {
+      width: 80%;
+      max-width: 400px;
+      height: auto;
+      margin-bottom: 20px;
+    }
+    /* Button styling */
+    .buttons {
+      margin-top: 20px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 1.2em;
+      margin: 10px;
+      cursor: pointer;
+    }
+    #noButton {
+      transition: all 0.3s ease-in-out;
+      position: relative;
+    }
+    /* Music container styling */
+    #musicContainer {
+      margin: 20px 0;
+    }
+    /* Rose petal animation styles */
+    .petal {
+      position: fixed;
+      top: -50px;
+      width: 30px;
+      height: 30px;
+      background-image: url('rose-petal-url-here'); /* Replace with your rose petal image URL */
+      background-size: cover;
+      opacity: 0.8;
+      pointer-events: none;
+      animation: fall linear infinite;
+    }
+    @keyframes fall {
+      0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container" id="mainContainer">
+    <!-- Top image: Replace with your own URL -->
+    <img id="mainImage" src="your-image-url-here" alt="Main Image" />
+
+    <!-- Main title with fancy font on "Valentines" -->
+    <h1>Will you be my <span class="fancy">Valentines?</span></h1>
+
+    <!-- Subtext -->
+    <p class="subtext">We can stop playing games for a night</p>
+
+    <!-- Music embed placeholder (YouTube embed) -->
+    <div id="musicContainer">
+      <!-- Replace the src with your YouTube embed link (e.g., https://www.youtube.com/embed/VIDEO_ID?autoplay=1) -->
+      <iframe id="musicFrame" src="your-youtube-link-here" allow="autoplay; encrypted-media" allowfullscreen style="width:300px; height:169px; border: none;"></iframe>
+    </div>
+
+    <!-- Buttons -->
+    <div class="buttons">
+      <button id="yesButton" onclick="sayYes()">Yes</button>
+      <button id="noButton" onclick="sayNo()">No</button>
+    </div>
+
+    <!-- Additional text for "No" responses -->
+    <p id="noText"></p>
+  </div>
+
+  <script>
+    let noClickCount = 0;
+
+    function sayNo() {
+      noClickCount++;
+      const noButton = document.getElementById('noButton');
+      const noText = document.getElementById('noText');
+      const mainImage = document.getElementById('mainImage');
+
+      // Update the No button text and style based on the number of clicks
+      if (noClickCount === 1) {
+        noButton.innerText = 'Are you sure?';
+      } else if (noClickCount === 2) {
+        noButton.innerText = 'Really sure?';
+      } else if (noClickCount === 3) {
+        noButton.innerText = 'Please?';
+        noButton.style.fontSize = '1em';
+      } else if (noClickCount >= 4) {
+        // Change the main image to a sad pleading image
+        mainImage.src = 'sad-image-url-here'; // Replace with your sad image URL
+        noButton.innerText = 'Still playing games, huh?';
+        // Make the button smaller and reposition it randomly
+        noButton.style.transform = `scale(${Math.max(0.5, 1 - (noClickCount - 3) * 0.1)})`;
+        noButton.style.position = 'absolute';
+        noButton.style.top = `${Math.random() * 80 + 10}%`;
+        noButton.style.left = `${Math.random() * 80 + 10}%`;
+        // Optionally add or update additional text\n        noText.innerText = 'Still playing games, huh?';
+      }
+    }
+
+    function sayYes() {
+      // Clear the main container content
+      const container = document.getElementById('mainContainer');
+      container.innerHTML = '';
+
+      // Create new content for the "Yes" response
+      const yesContainer = document.createElement('div');
+      yesContainer.style.padding = '20px';
+      yesContainer.innerHTML = `
+        <!-- Additional image for the yes response; replace with your own URL -->
+        <img id="yesImage" src="your-yes-image-url-here" alt="Yes Image" style="width:80%; max-width:400px; height:auto; margin-bottom:20px;">
+        <!-- Congratulatory message -->
+        <h1>I knew you couldn't resist me</h1>
+      `;
+      container.appendChild(yesContainer);
+
+      // Start the rose petal animation
+      startRosePetalAnimation();
+    }
+
+    function startRosePetalAnimation() {
+      // Create several petal elements for a romantic falling animation
+      for (let i = 0; i < 20; i++) {
+        const petal = document.createElement('div');
+        petal.className = 'petal';
+        // Randomize animation duration and delay for variety
+        const duration = Math.random() * 5 + 5; // Duration between 5 and 10 seconds
+        petal.style.animationDuration = duration + 's';
+        petal.style.animationDelay = Math.random() * 5 + 's';
+        // Randomize starting horizontal position
+        petal.style.left = Math.random() * 100 + '%';
+        document.body.appendChild(petal);
+
+        // Remove the petal after the animation completes to avoid cluttering the DOM
+        setTimeout(() => {
+          petal.remove();
+        }, (duration + 5) * 1000);
+      }
+    }
+  </script>
+</body>
+</html>
