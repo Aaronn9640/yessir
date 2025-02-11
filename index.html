@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Be My Valentine?</title>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.4.0"></script>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+            background-color: pink;
+        }
+        .container {
+            margin-top: 50px;
+        }
+        .buttons {
+            margin-top: 20px;
+        }
+        #noButton {
+            transition: all 0.3s ease-in-out;
+            position: relative;
+        }
+        img {
+            width: 200px;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Will you be my Valentine? ❤️</h1>
+        <img src="your-image-url-here" alt="Cute Image">
+        <div class="buttons">
+            <button id="yesButton" onclick="sayYes()">Yes</button>
+            <button id="noButton" onclick="sayNo()">No</button>
+        </div>
+    </div>
+    
+    <script>
+        let noClickCount = 0;
+        
+        function sayNo() {
+            const noButton = document.getElementById("noButton");
+            noClickCount++;
+            
+            if (noClickCount < 3) {
+                noButton.innerText = "Are you sure?";
+            } else if (noClickCount < 5) {
+                noButton.innerText = "Really sure?";
+            } else if (noClickCount < 7) {
+                noButton.innerText = "Please?";
+                noButton.style.fontSize = `${20 - noClickCount * 2}px`;
+            } else {
+                noButton.style.position = "absolute";
+                noButton.style.top = `${Math.random() * 80 + 10}%`;
+                noButton.style.left = `${Math.random() * 80 + 10}%`;
+                noButton.innerText = "Come on! 💔";
+            }
+        }
+        
+        function sayYes() {
+            document.body.innerHTML = "<h1>Yay! 🎉 You said yes! ❤️</h1>";
+            confetti();
+        }
+    </script>
+</body>
+</html>
